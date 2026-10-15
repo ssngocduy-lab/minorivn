@@ -4,6 +4,10 @@ import webbrowser
 from pathlib import Path
 import sys
 
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
+
+
 PORT = 8000
 DIRECTORY = Path(__file__).parent / "dist"
 

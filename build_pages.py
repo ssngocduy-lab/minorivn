@@ -289,6 +289,9 @@ home = f'''    <!-- 1. HERO SECTION -->
 (root / 'index.html').write_text(doc('Cho mùa vụ tốt hơn', 'Minori Agritech đồng hành cùng cây lúa từ bộ rễ đến hạt vàng qua ba giai đoạn của mùa vụ.', 'home', home, base='./'), encoding='utf-8')
 
 for p in products:
+    if p['slug'] == 'root-turbo':
+        # Root Turbo page has been upgraded to a dedicated rich showcase page with composition, Japan tech, field guide, and FAQ
+        continue
     nxt = by_slug[p['next']]
     problems = '\n            '.join(f'<div class="problem">{escape(item)}</div>' for item in p['problems'])
     flow = '\n          '.join(f'<div class="flow-step">{escape(item)}</div>' for item in p['flow'])
