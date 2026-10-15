@@ -70,8 +70,8 @@ by_slug = {p['slug']: p for p in products}
 def header(active, base='./'):
     items = [
         (f'{base}', 'Trang chủ', 'home'),
-        (f'{base}root-turbo/', 'Root Turbo', 'root-turbo'),
-        (f'{base}ultra-grow/', 'Ultra Grow', 'ultra-grow'),
+        (f'{base}root-turbo/', 'Root Turbo - Kích Rễ', 'root-turbo'),
+        (f'{base}ultra-grow/', 'Ultra Grow - Khỏe Cây', 'ultra-grow'),
         (f'{base}vo-gao-promax/', 'Vô Gạo Pro Max', 'vo-gao-promax')
     ]
     links = '\n          '.join(f'<a href="{href}"{(" aria-current=\"page\"" if active==key else "")}>{text}</a>' for href, text, key in items)
