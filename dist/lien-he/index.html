@@ -10,6 +10,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="../assets/site.css">
   <link rel="stylesheet" href="../assets/refinements.css">
+  <script>
+    if (/iPad|iPhone|iPod|Android/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
+      document.documentElement.classList.add('mobile-os');
+    }
+  </script>
 </head>
 <body>
 
@@ -31,7 +36,7 @@
           <a href="../root-turbo/">Root Turbo</a>
           <a href="../ultra-grow/">Ultra Grow</a>
           <a href="../vo-gao-promax/">Vô Gạo Pro Max</a>
-          <a class="nav-contact" href="../lien-he/" aria-current="page">Liên hệ ↗</a>
+          <a class="nav-contact" href="../lien-he/" aria-current="page">Liên hệ</a>
         </nav>
       </div>
     </div>

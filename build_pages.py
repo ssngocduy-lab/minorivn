@@ -90,7 +90,7 @@ def header(active, base='./'):
         <button class="menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false">Menu</button>
         <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
           {links}
-          <a class="nav-contact" href="{base}lien-he/"{(' aria-current="page"' if active=='contact' else '')}>Liên hệ ↗</a>
+          <a class="nav-contact" href="{base}lien-he/"{(' aria-current="page"' if active=='contact' else '')}>Liên hệ</a>
         </nav>
       </div>
     </div>
@@ -151,6 +151,11 @@ def doc(title, description, active, body, base='./'):
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="{base}assets/site.css">
   <link rel="stylesheet" href="{base}assets/refinements.css">
+  <script>
+    if (/iPad|iPhone|iPod|Android/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {{
+      document.documentElement.classList.add('mobile-os');
+    }}
+  </script>
 </head>
 <body>
 
