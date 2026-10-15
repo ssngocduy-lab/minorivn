@@ -1,0 +1,423 @@
+/* Lớp nội dung đủ trong để nhìn thấy ruộng lúa, nhưng giữ chữ đậm và rõ. */
+:root {
+  --ink: #142d1d;
+  --dark: #113b27;
+  --glass: rgba(255, 248, 218, .30);
+  --dark-glass: rgba(12, 46, 27, .68);
+}
+
+body {
+  color: #142d1d;
+  font-family: 'Be Vietnam Pro', Arial, sans-serif;
+}
+
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, .65);
+  box-shadow: 0 22px 60px rgba(56, 39, 5, .13);
+}
+
+.glass-dark {
+  background: var(--dark-glass);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.question,
+.problem {
+  background: rgba(255, 249, 225, .22);
+}
+
+h1, h2, h3, .display,
+.manifesto-card blockquote,
+.effect-card blockquote,
+.journey-end {
+  font-family: 'Be Vietnam Pro', Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: -.045em;
+  line-height: 1.18;
+}
+
+em { font-style: normal; }
+
+.eyebrow,
+.kicker,
+.stage-day {
+  font-family: 'Be Vietnam Pro', Arial, sans-serif;
+  font-size: .9rem;
+  font-weight: 800;
+  letter-spacing: .095em;
+  line-height: 1.5;
+}
+
+.stage-day { font-size: .92rem; }
+.lead { font-size: clamp(1.13rem, 1.7vw, 1.5rem); }
+
+/* Logo tách khỏi tấm nền của điều hướng. */
+.site-header { padding: 17px 0 6px; }
+.site-header .wrap.header-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 34px;
+}
+
+.brand {
+  min-width: 0;
+  gap: 17px;
+  flex: none;
+  filter: drop-shadow(0 2px 2px rgba(255, 250, 224, .7));
+}
+
+.brand img {
+  width: 108px;
+  height: 128px;
+  object-fit: contain;
+  flex: none;
+}
+
+.brand b,
+.footer-brand strong {
+  display: block;
+  font-family: 'Be Vietnam Pro', Arial, sans-serif;
+  font-size: 1.65rem;
+  font-weight: 800;
+  letter-spacing: .13em;
+  line-height: 1.25;
+}
+
+.brand b { color: #0d3924; }
+
+.brand small,
+.footer-brand small {
+  display: block;
+  font-family: 'Be Vietnam Pro', Arial, sans-serif;
+  font-size: .79rem;
+  font-weight: 700;
+  letter-spacing: .09em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.brand small { color: #31512c; }
+
+.nav-shell {
+  margin-left: auto;
+  padding: 8px 13px;
+  border: 1px solid rgba(255, 255, 255, .55);
+  border-radius: 100px;
+  background: rgba(255, 248, 220, .39);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  box-shadow: 0 8px 28px rgba(49, 35, 5, .1);
+}
+
+.main-nav a { font-size: .8rem; color: #163b25; }
+.main-nav .nav-contact { font-size: .8rem; }
+
+/* Tiêu đề tiếng Việt rõ, gọn và không dùng chữ nghiêng serif. */
+.hero-copy h1 {
+  font-size: clamp(3rem, 5.25vw, 5.4rem);
+  line-height: 1.12;
+  color: #0e3422;
+  overflow-wrap: normal;
+}
+
+.hero-copy h1 em {
+  display: block;
+  color: #84500c;
+}
+
+.hero-copy,
+.story-card,
+.stage-body,
+.next-card,
+.detail-grid,
+.contact-copy,
+.contact-form {
+  color: #102c1e;
+  text-shadow: 0 1px 1px rgba(255, 251, 233, .48);
+}
+
+.hero-aside h2 { font-size: clamp(2rem, 2.7vw, 2.8rem); }
+.hero-aside .eyebrow { font-size: .82rem; }
+.hero-aside .aside-number { font-family: 'Be Vietnam Pro', Arial, sans-serif; font-weight: 700; }
+
+/* Tiêu đề timeline có tấm trong suốt riêng để không chìm vào nền lúa. */
+.journey-top {
+  padding: 32px 38px;
+  border-radius: 12px;
+  background: rgba(255, 248, 218, .30);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, .65);
+  box-shadow: 0 20px 55px rgba(56, 39, 5, .13);
+}
+
+.journey-top h2 {
+  color: #092a1b;
+  font-size: clamp(2.6rem, 4.7vw, 4.9rem);
+  font-weight: 800;
+  line-height: 1.16;
+  text-shadow: 0 1px 1px rgba(255, 251, 232, .6);
+}
+
+.journey-top p {
+  max-width: 340px;
+  color: #102d1c;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.6;
+  text-shadow: 0 1px 1px rgba(255, 251, 232, .65);
+}
+
+.stage-body h3 { color: #0c3320; font-size: clamp(1.65rem, 2.4vw, 2.5rem); }
+.stage-body p { font-size: 1rem; }
+.stage-count span { font-family: 'Be Vietnam Pro', Arial, sans-serif; font-weight: 700; }
+.story-grid h2 { color: #0b301f; }
+.story-card .lead { font-weight: 600; }
+
+.product-hero-copy h1 {
+  font-size: clamp(3rem, 5.5vw, 5.9rem);
+  line-height: 1.14;
+}
+
+.detail-grid h2 { font-size: clamp(2.5rem, 4vw, 4.4rem); }
+
+.footer {
+  background: rgba(10, 41, 25, .68);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+}
+
+.footer-brand { margin-bottom: 17px; }
+.footer-brand strong { color: #ffe1a2; }
+.footer-brand small { color: #f2e6bf; margin-top: 3px; }
+.footer b { font-size: 1rem; }
+
+@media (max-width: 1180px) {
+  .brand img { width: 90px; height: 105px; }
+  .brand b { font-size: 1.45rem; }
+  .brand small { font-size: .68rem; }
+  .menu-toggle { display: block; }
+  .main-nav {
+    display: none;
+    position: absolute;
+    top: calc(100% + 7px);
+    left: auto;
+    right: 0;
+    width: min(330px, calc(100vw - 35px));
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 16px;
+    border: 1px solid rgba(255, 255, 255, .6);
+    border-radius: 18px;
+    background: rgba(255, 247, 217, .9);
+    box-shadow: 0 18px 50px rgba(37, 29, 4, .2);
+    backdrop-filter: blur(12px);
+    z-index: 80;
+  }
+  .main-nav.open { display: flex; }
+  .main-nav a { padding: 12px; font-size: .9rem; }
+  .main-nav .nav-contact { text-align: center; margin-top: 9px; }
+  .nav-shell { position: relative; }
+}
+
+@media (max-width: 780px) {
+  .site-header { padding: 8px 0 0; }
+  .brand img { width: 78px; height: 91px; }
+  .brand b { font-size: 1.3rem; }
+  .brand small { font-size: .61rem; }
+  .nav-shell { padding: 7px; }
+  .hero { padding-top: 30px; }
+  .hero-copy h1 { font-size: clamp(2.85rem, 8.8vw, 4.2rem); }
+  .journey-top { padding: 26px; }
+  .journey-top h2 { font-size: clamp(2.35rem, 7vw, 3.8rem); }
+  .journey-top p { max-width: 100%; margin-top: 18px; }
+  .main-nav { top: calc(100% + 9px); left: auto; right: 0; }
+}
+
+@media (max-width: 520px) {
+  .site-header .wrap.header-layout { gap: 9px; }
+  .brand { gap: 8px; }
+  .brand img { width: 66px; height: 77px; }
+  .brand b { font-size: 1.05rem; letter-spacing: .09em; }
+  .brand small { font-size: .48rem; letter-spacing: .04em; }
+  .menu-toggle { padding: 7px 11px; }
+  .hero-copy h1 { font-size: clamp(2.5rem, 11vw, 3.25rem); }
+  .eyebrow, .kicker { font-size: .8rem; }
+  .journey-top { padding: 23px; }
+  .journey-top h2 { font-size: 2.25rem; }
+  .journey-top p { font-size: 1rem; }
+  .footer-brand strong { font-size: 1.42rem; }
+  .footer-brand small { font-size: .66rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal.visible { animation: none; }
+}
+
+/* Bản cập nhật: nhận diện lớn hơn, không nằm chung tấm nền menu. */
+.site-header .wrap.header-layout { gap: 20px; }
+.brand { gap: 20px; }
+.brand img { width: 146px; height: 168px; }
+.brand b { font-size: 2.05rem; letter-spacing: .11em; }
+.brand small { font-size: .96rem; letter-spacing: .07em; }
+
+/* Ảnh mùa vụ và nhãn chai là hai vùng độc lập để chi tiết ảnh không bị che. */
+.stage-photo > img { object-position: 60% center; }
+.stage-row:first-child .stage-photo > img { object-position: 70% center; }
+.stage-row:last-child .stage-photo > img { object-position: 72% center; }
+.stage-photo::after { display: none; }
+.stage-body { position: relative; }
+.stage-product {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+  padding: 11px 14px;
+  min-height: 122px;
+  border-radius: 12px;
+  background: rgba(255, 250, 226, .34);
+  border: 1px solid rgba(255, 255, 255, .5);
+}
+.stage-product > span,
+.bottle-caption > span {
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: #36532e;
+}
+.stage-product .bottle-window { flex: none; width: 60px; height: 100px; }
+.bottle-window {
+  position: relative;
+  inset: auto;
+  display: block;
+  overflow: hidden;
+  filter: drop-shadow(0 7px 8px rgba(26, 34, 13, .2));
+}
+.bottle-window img,
+.stage-product .bottle-window img,
+.product-hero-art .bottle-window img {
+  position: absolute;
+  display: block;
+  width: auto;
+  height: 100%;
+  max-width: none;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+}
+.bottle-window--front img,
+.stage-product .bottle-window--front img,
+.product-hero-art .bottle-window--front img {
+  width: auto;
+  height: 100%;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+}
+.product-hero-art {
+  height: auto;
+  margin-top: 0;
+  border-radius: 120px 14px 14px 14px;
+  background: rgba(255, 249, 225, .38);
+}
+.product-hero-art::after { display: none; }
+.art-photo { position: relative; height: 390px; overflow: hidden; }
+.art-photo > img.photo { display: block; width: 100%; height: 100%; object-fit: cover; }
+.product-hero-art .art-photo .art-label {
+  left: 24px;
+  bottom: 19px;
+  padding: 7px 11px;
+  border-radius: 6px;
+  background: rgba(13, 52, 30, .7);
+  color: #fff;
+  text-shadow: none;
+  line-height: 1.45;
+}
+.product-hero-art:has(.bottle-window--front) .art-photo > img.photo { object-position: 55% center; }
+.product-hero-art:has(img[src*="root-turbo.svg"]) .art-photo > img.photo { object-position: 68% center; }
+.product-hero-art:has(img[src*="vo-gao-promax.svg"]) .art-photo > img.photo { object-position: 70% center; }
+.product-bottle-card {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 195px;
+  padding: 12px 25px;
+  border-top: 1px solid rgba(255, 255, 255, .6);
+  background: rgba(255, 247, 215, .56);
+}
+.product-hero-art .product-bottle-card .bottle-window {
+  flex: none;
+  width: 94px;
+  height: 170px;
+  right: auto;
+  bottom: auto;
+}
+.bottle-caption { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.bottle-caption strong { color: #173c28; font-size: clamp(1.18rem, 2vw, 1.75rem); line-height: 1.25; }
+.bottle-caption small { color: #52663e; font-weight: 700; }
+
+/* Các bước không dùng Georgia và không bị ngắt giữa chữ tiếng Việt. */
+.flow { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+.flow-step {
+  min-width: 0;
+  padding: 16px 12px 20px;
+  font-family: 'Be Vietnam Pro', Arial, sans-serif;
+  font-size: clamp(1.1rem, 1.5vw, 1.38rem);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: -.025em;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+}
+.flow-step:not(:last-child)::after { right: -19px; top: 15px; }
+.effect-card blockquote { font-size: clamp(1.35rem, 2.1vw, 2rem); line-height: 1.5; }
+.product-hero-copy h1 em { color: #79480a; }
+
+@media (max-width: 1180px) {
+  .brand img { width: 124px; height: 144px; }
+  .brand b { font-size: 1.75rem; }
+  .brand small { font-size: .8rem; }
+}
+@media (max-width: 980px) {
+  .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 18px; }
+  .flow-step:nth-child(2)::after { display: none; }
+  .product-hero-art { margin-top: 18px; }
+}
+@media (max-width: 780px) {
+  .brand img { width: 130px; height: 148px; }
+  .brand b { font-size: 1.7rem; }
+  .brand small { font-size: .76rem; }
+  .stage-photo { height: 300px; }
+  .art-photo { height: 365px; }
+}
+@media (max-width: 620px) {
+  .flow { grid-template-columns: 1fr; }
+  .flow-step { font-size: 1.13rem; padding: 11px 8px 15px; }
+  .flow-step:not(:last-child)::after { display: none; }
+  .effect-card { padding-inline: 24px; }
+}
+@media (max-width: 520px) {
+  .site-header .wrap.header-layout { gap: 8px; }
+  .brand { gap: 10px; }
+  .brand img { width: 116px; height: 134px; }
+  .brand b { font-size: 1.47rem; letter-spacing: .07em; }
+  .brand small { font-size: .65rem; letter-spacing: .02em; }
+  .art-photo { height: 310px; }
+  .product-bottle-card { height: 175px; gap: 10px; padding: 8px 16px; }
+  .product-hero-art .product-bottle-card .bottle-window { width: 85px; height: 150px; }
+  .bottle-caption strong { font-size: 1.2rem; }
+  .stage-photo { height: 250px; }
+}
+@media (max-width: 460px) {
+  .site-header .wrap.header-layout { flex-wrap: wrap; }
+  .nav-shell { margin-left: auto; }
+  .brand { width: 100%; }
+}
