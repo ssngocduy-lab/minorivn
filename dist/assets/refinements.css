@@ -421,3 +421,214 @@ em { font-style: normal; }
   .nav-shell { margin-left: auto; }
   .brand { width: 100%; }
 }
+
+/* ============================================================
+   Typography refinement: Thanh mảnh, thoáng chữ & to hơn
+   ============================================================ */
+.btn {
+  font-size: 1.02rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  padding: 13px 26px;
+}
+.btn.ghost {
+  font-weight: 500;
+}
+.arrow-link {
+  font-size: 1.02rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.question p {
+  font-size: 1.08rem;
+  font-weight: 450;
+  line-height: 1.6;
+  color: var(--ink);
+}
+.question b {
+  font-size: 2.3rem;
+  font-weight: 400;
+}
+
+/* ============================================================
+   Stage Product Image: Scale fit & Clickable to product page
+   ============================================================ */
+.stage-product {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 24px;
+  padding: 14px 18px;
+  min-height: 140px;
+  border-radius: 14px;
+  background: rgba(255, 250, 226, .5);
+  border: 1px solid rgba(255, 255, 255, .6);
+  box-shadow: 0 4px 20px rgba(52, 40, 5, .06);
+  overflow: hidden;
+}
+.stage-product-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.stage-product-link img {
+  max-width: 100%;
+  max-height: 130px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transition: transform .3s ease, filter .3s ease;
+  filter: drop-shadow(0 6px 12px rgba(25, 45, 20, .15));
+}
+.stage-product-link:hover img {
+  transform: scale(1.05);
+  filter: drop-shadow(0 10px 18px rgba(25, 45, 20, .25));
+}
+
+/* ============================================================
+   Product Hero: Bottle Window popup click hint
+   ============================================================ */
+.product-hero-art .bottle-window {
+  cursor: pointer;
+  position: relative;
+  transition: transform .25s ease;
+}
+.product-hero-art .bottle-window:hover {
+  transform: scale(1.04);
+}
+.zoom-badge {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(13, 52, 30, 0.85);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 100px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+/* ============================================================
+   Image Modal Popup Frame (Desktop & Mobile scale fit)
+   ============================================================ */
+.image-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(10, 28, 18, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+}
+.image-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+}
+.modal-content {
+  position: relative;
+  z-index: 2;
+  max-width: 92vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-content img {
+  max-width: 90vw;
+  max-height: 84vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+  animation: modal-pop .25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes modal-pop {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.modal-close {
+  position: absolute;
+  top: -46px;
+  right: 0;
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  font-size: 1.4rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s, transform .2s;
+}
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.1);
+}
+
+/* ============================================================
+   Product Full View Section (Section ngay dưới product-hero)
+   ============================================================ */
+.product-full-view {
+  padding: 40px 0 70px;
+}
+.product-full-card {
+  padding: 48px clamp(24px, 5vw, 64px);
+  border-radius: 18px;
+  text-align: center;
+}
+.product-full-card .full-view-header {
+  max-width: 720px;
+  margin: 0 auto 32px;
+}
+.product-full-card .full-view-header h2 {
+  font-size: clamp(2rem, 3.5vw, 3.2rem);
+  color: #1a3c28;
+  margin: 12px 0 14px;
+}
+.product-full-card .full-view-header .eyebrow {
+  justify-content: center;
+}
+.full-view-artwork {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.45);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 12px 35px rgba(25, 45, 20, 0.08);
+}
+.full-view-artwork img {
+  width: 100%;
+  max-width: 1100px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  border-radius: 8px;
+  filter: drop-shadow(0 10px 24px rgba(20, 40, 15, 0.15));
+}
+
