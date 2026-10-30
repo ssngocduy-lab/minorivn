@@ -31,7 +31,7 @@ for page in pages:
             missing.append((str(page), ref))
 
 forbidden = [p for p in root.rglob('*') if any(x in p.name.lower() for x in ['tham khao', 'thao khao'])]
-assert len(pages) == 5, pages
+assert len(pages) == 6, pages
 assert not missing, f"Missing references: {missing}"
 assert not forbidden, forbidden
-print('5 pages, all local links resolved, no partner reference images')
+print('6 pages, all local links resolved, no partner reference images')
