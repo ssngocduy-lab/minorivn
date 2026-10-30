@@ -1,5 +1,7 @@
 from pathlib import Path
 from html import escape
+import json
+import re
 
 root = Path(__file__).parent / 'dist'
 
@@ -333,8 +335,8 @@ home = f'''    <!-- 1. HERO SECTION -->
 (root / 'index.html').write_text(doc('Cho mùa vụ tốt hơn', 'Minori Agritech đồng hành cùng cây lúa từ bộ rễ đến hạt vàng qua ba giai đoạn của mùa vụ.', 'home', home, base='./', path=''), encoding='utf-8')
 
 for p in products:
-    if p['slug'] == 'root-turbo':
-        # Root Turbo page has been upgraded to a dedicated rich showcase page with composition, Japan tech, field guide, and FAQ
+    if p['slug'] in ('root-turbo', 'ultra-grow'):
+        # Root Turbo and Ultra Grow pages have been upgraded to dedicated rich showcase pages
         continue
     nxt = by_slug[p['next']]
     problems = '\n            '.join(f'<div class="problem">{escape(item)}</div>' for item in p['problems'])
@@ -762,6 +764,364 @@ leaf_body = f'''
 (root / leaf['slug']).mkdir(exist_ok=True)
 (root / leaf['slug'] / 'index.html').write_text(
     doc(leaf_title, leaf_desc, leaf['slug'], leaf_body, base='../', path=f"{leaf['slug']}/", head_extra=leaf_head),
+    encoding='utf-8')
+
+# ================================================================
+# Trang MINORI Ultra Grow (/ultra-grow/)
+# Nâng cấp thành trang giới thiệu chuyên sâu, cao cấp bám sát nhãn Minori và
+# bài viết minori-ultra-grow-bai-gioi-thieu.md
+# ================================================================
+ug_slug = 'ultra-grow'
+ug_url = f"{SITE}{ug_slug}/"
+ug_title = 'MINORI Ultra Grow – Dưỡng Cây Chuyên Sâu Giữa Vụ'
+ug_desc = 'MINORI Ultra Grow – Dòng dưỡng cây chuyên sâu giữa vụ lúa với công thức potassium phosphite 30–20 (Lân hữu hiệu 30%, Kali hữu hiệu 20%), chăm bộ rễ, lá xanh dày và hỗ trợ đề kháng.'
+
+ug_faq = [
+    ('MINORI Ultra Grow khác gì ở nền tảng công thức?',
+     'Theo thông tin Minori Agritech, sản phẩm dựa trên potassium phosphite từ Van Iperen, Hà Lan. Nhãn Minori ghi lân hữu hiệu 30%, kali hữu hiệu 20% và nhà sản xuất tại Hà Lan.'),
+    ('Potassium phosphite được nghiên cứu về tác dụng gì?',
+     'Nghiên cứu trên lúa mì và lúa ghi nhận thay đổi ở bộ rễ, hoạt động quang hợp hoặc các phản ứng sinh lý của cây trong những điều kiện thí nghiệm cụ thể. Đây là cơ sở cho hướng dưỡng cây chuyên sâu.'),
+    ('Số 30–20 có nghĩa là gì?',
+     'Nhãn Minori ghi <strong>lân hữu hiệu 30%</strong> và <strong>kali hữu hiệu 20%</strong>. Tài liệu Van Iperen ghi tỷ lệ P₂O₅/K₂O quy đổi tương ứng của nguyên liệu potassium phosphite. Phosphite không thay thế nguồn lân phosphate thông thường.'),
+    ('Pha và dùng cho lúa như thế nào?',
+     'Nhãn ghi pha <strong>1 lít với 400–800 lít nước</strong>; với cây lương thực, dùng tổng cộng <strong>1,5–2 lít/ha/vụ</strong>, chia <strong>2–3 lần/ha/vụ</strong> vào các giai đoạn bón lót, bón thúc. Phun sáng sớm hoặc chiều mát. Mốc 20–45 ngày sau sạ không phải lịch phun cố định cho mọi giống lúa.'),
+]
+
+ug_faq_html = '\n\n'.join(f'''            <details class="faq-item">
+              <summary class="faq-question">
+                <span>{i}. {escape(q)}</span>
+                <span class="faq-toggle-icon" aria-hidden="true">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>{a}</p>
+              </div>
+            </details>''' for i, (q, a) in enumerate(ug_faq, 1))
+
+ug_faq_json = ',\n'.join(f'''          {{
+            "@type": "Question",
+            "name": {json.dumps(q, ensure_ascii=False)},
+            "acceptedAnswer": {{
+              "@type": "Answer",
+              "text": {json.dumps(re.sub(r'<[^>]+>', '', a), ensure_ascii=False)}
+            }}
+          }}''' for q, a in ug_faq)
+
+ug_head = f'''
+
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {{
+    "@context": "https://schema.org",
+    "@graph": [
+      {{
+        "@type": "WebPage",
+        "@id": "{ug_url}#webpage",
+        "url": "{ug_url}",
+        "name": "{ug_title} | Minori Agritech",
+        "description": "{ug_desc}",
+        "breadcrumb": {{
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {{ "@type": "ListItem", "position": 1, "name": "Trang chủ", "item": "{SITE}" }},
+            {{ "@type": "ListItem", "position": 2, "name": "Ultra Grow", "item": "{ug_url}" }}
+          ]
+        }}
+      }},
+      {{
+        "@type": "Product",
+        "@id": "{ug_url}#product",
+        "name": "MINORI Ultra Grow",
+        "category": "Dinh dưỡng cây trồng & Chăm cây chuyên sâu",
+        "description": "Phân bón lá hỗn hợp PK Newriver - Fosfo với công thức potassium phosphite (Lân hữu hiệu 30%, Kali hữu hiệu 20%) dành cho giai đoạn dưỡng cây chuyên sâu giữa vụ.",
+        "brand": {{
+          "@type": "Brand",
+          "name": "Minori Agritech"
+        }},
+        "image": "https://minorivn.com/assets/minori-ultra-grow.svg"
+      }},
+      {{
+        "@type": "FAQPage",
+        "@id": "{ug_url}#faq",
+        "mainEntity": [
+{ug_faq_json}
+        ]
+      }}
+    ]
+  }}
+  </script>'''
+
+ug_body = f'''
+    <!-- 1. PRODUCT HERO -->
+    <section class="product-hero">
+      <div class="wrap product-hero-grid">
+        <div class="product-hero-copy glass">
+          <div class="eyebrow">02 / Giai đoạn giữa vụ (20–45 ngày sau sạ)</div>
+          <h1>MINORI Ultra Grow<br><em>Dưỡng cây chuyên sâu giữa vụ</em></h1>
+          <div class="stage-chip">Khung theo dõi giữa vụ thường gặp</div>
+          <p class="lead">Sau khi bén rễ và bước vào đẻ nhánh, cây lúa cần nuôi bộ lá, phát triển thân và chuẩn bị làm đòng. Khoảng 20–45 ngày sau sạ là khung theo dõi giữa vụ thường gặp, thay đổi theo từng giống và mùa vụ. MINORI Ultra Grow được định vị là dòng chăm cây chuyên sâu, cao cấp với công thức potassium phosphite 30–20, giúp cây duy trì sức sinh trưởng bền bỉ trước khi bước vào giai đoạn làm đòng.</p>
+          <div class="hero-actions">
+            <a class="btn" href="#thanh-phan">Xem thành phần</a>
+            <a class="btn ghost" href="#huong-dan-su-dung">Xem hướng dẫn sử dụng</a>
+          </div>
+        </div>
+
+        <div class="product-hero-art">
+          <div class="art-photo">
+            <img class="photo" src="../assets/growth.webp" alt="Ruộng lúa xanh khỏe trong giai đoạn giữa vụ">
+            <span class="art-label">MINORI Ultra Grow</span>
+          </div>
+
+          <div class="product-bottle-card">
+            <!-- Nhấn vào để phóng to hình ảnh scale-fit màn hình -->
+            <div class="bottle-window" data-full-img="../assets/minori-ultra-grow.svg" role="button" tabindex="0" title="Nhấn để phóng to hình ảnh">
+              <img src="../assets/minori-ultra-grow.svg" alt="Mặt trước chai MINORI Ultra Grow 500 ml" loading="lazy">
+              <span class="zoom-badge">🔍 Phóng to</span>
+            </div>
+            <div class="bottle-caption">
+              <span>Dòng chăm cây chuyên sâu</span>
+              <strong>MINORI Ultra Grow</strong>
+              <small>Potassium Phosphite 30–20</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. FULL VIEW SECTION: Hiển thị đầy đủ hình ảnh sản phẩm scale fit chiều rộng trang web -->
+    <section class="product-full-view">
+      <div class="wrap">
+        <div class="product-full-card glass reveal">
+          <div class="full-view-header">
+            <div class="eyebrow section-label">Bao bì &amp; Nhãn chi tiết</div>
+            <h2>Hình ảnh đầy đủ MINORI Ultra Grow</h2>
+            <p class="lead">Bao bì chuẩn nhận diện chai 500 ml: thành phần công bố, công dụng, đặc tính cây lúa và hướng dẫn sử dụng.</p>
+          </div>
+          <div class="full-view-artwork" data-full-img="../assets/minori-ultra-grow.svg" role="button" tabindex="0" title="Nhấn để phóng to hình ảnh">
+            <img src="../assets/minori-ultra-grow.svg" alt="Ba mặt chai MINORI Ultra Grow 500 ml – công thức potassium phosphite 30-20" loading="lazy">
+            <span class="zoom-badge zoom-badge--full">🔍 Nhấn để phóng to</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. DETAIL / ĐIỂM RƠI MÙA VỤ -->
+    <section class="detail-section" id="giua-vu">
+      <div class="wrap detail-grid glass reveal">
+        <div>
+          <div class="eyebrow section-label">Điểm rơi mùa vụ</div>
+          <h2>Giai đoạn giữa vụ cần điều gì?</h2>
+        </div>
+        <div>
+          <p class="lead">Sau giai đoạn đẻ nhánh, cây lúa bước vào thời kỳ sinh trưởng mạnh. Bộ rễ tốt đầu vụ là điểm khởi đầu; cây còn cần giữ nhịp phát triển ổn định để đi đường dài.</p>
+          <p>Người nông dân cần cây đủ sức đi qua áp lực giữa vụ, duy trì bộ lá xanh dày quang hợp tốt, rễ thân cứng cáp và sẵn sàng tích lũy dinh dưỡng cho giai đoạn làm đòng.</p>
+          <div class="problem-grid">
+            <div class="problem">Khỏe rễ, khỏe thân</div>
+            <div class="problem">Lá xanh dày, quang hợp tốt</div>
+            <div class="problem">Tăng sức chống chịu stress</div>
+            <div class="problem">Sẵn sàng làm đòng &amp; nuôi bông</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. THÀNH PHẦN THEO NHÃN MINORI ULTRA GROW & CƠ CHẾ KHOA HỌC -->
+    <section class="composition-section" id="thanh-phan">
+      <div class="wrap">
+        <div class="composition-card-wrap glass reveal">
+          <div class="composition-header">
+            <div class="eyebrow section-label" style="justify-content:center">Công thức Potassium Phosphite 30–20</div>
+            <h2>Chỉ tiêu công bố theo nhãn sản phẩm</h2>
+            <p class="lead">Hàm lượng và chỉ tiêu vật lý trích xuất chính xác theo nhãn sản xuất MINORI Ultra Grow:</p>
+          </div>
+
+          <!-- Bảng 4 thẻ thành phần hiển thị trực quan dạng HTML text rõ ràng -->
+          <div class="composition-grid">
+            <div class="nutrient-card">
+              <div class="nutrient-val">30%</div>
+              <div class="nutrient-name">Lân hữu hiệu</div>
+              <div class="nutrient-en">Phosphite (P₂O₅ quy đổi)</div>
+              <p class="nutrient-desc">Nền tảng potassium phosphite tham gia kích hoạt các phản ứng sinh lý của cây, hỗ trợ phát triển rễ và kích hoạt hệ thống đề kháng tự nhiên.</p>
+            </div>
+
+            <div class="nutrient-card">
+              <div class="nutrient-val">20%</div>
+              <div class="nutrient-name">Kali hữu hiệu</div>
+              <div class="nutrient-en">K₂O</div>
+              <p class="nutrient-desc">Điều tiết nước trong tế bào, hoạt động khí khổng, tăng cường vận chuyển quang hợp và giúp thân lá cứng cáp, bền bỉ.</p>
+            </div>
+
+            <div class="nutrient-card">
+              <div class="nutrient-val">1,5</div>
+              <div class="nutrient-name">Tỷ trọng</div>
+              <div class="nutrient-en">Density (g/ml)</div>
+              <p class="nutrient-desc">Dung dịch đậm đặc, đồng nhất, bám dính tốt trên bề mặt lá và hỗ trợ cây hấp thu dinh dưỡng nhanh qua rễ, thân, lá.</p>
+            </div>
+
+            <div class="nutrient-card">
+              <div class="nutrient-val">6,5</div>
+              <div class="nutrient-name">pH H₂O</div>
+              <div class="nutrient-en">Chỉ số trung tính</div>
+              <p class="nutrient-desc">Độ pH lý tưởng, an toàn cho mô lá lúa non, dễ dàng phối hợp trong các lần phun chăm sóc định kỳ.</p>
+            </div>
+          </div>
+
+          <div class="composition-disclaimer">
+            <strong>Lưu ý khoa học:</strong> Phosphite khác phosphate. Potassium phosphite là một hợp chất riêng biệt, không thay thế nguồn lân phosphate trong chương trình dinh dưỡng phân bón thông thường. Chỉ số 30% và 20% là thông tin công bố của chính nhãn MINORI Ultra Grow (phương thức sử dụng: bón lá).
+          </div>
+
+          <!-- Khối mở rộng: Cơ chế khoa học & Tài liệu tham khảo -->
+          <details class="research-expandable">
+            <summary class="research-summary">
+              <span>Nền tảng hoạt chất được nghiên cứu quốc tế (Cơ chế khoa học)</span>
+              <span class="summary-indicator">
+                <span>Xem chi tiết / Thu gọn</span>
+                <span class="summary-chevron" aria-hidden="true">▼</span>
+              </span>
+            </summary>
+            <div class="research-body">
+              <p class="research-intro">Các nghiên cứu nông học quốc tế ghi nhận tiềm năng và phản ứng sinh học của hoạt chất potassium phosphite đối với cây trồng:</p>
+
+              <div class="research-list">
+                <div class="research-item">
+                  <strong>Nghiên cứu trên lúa mì (Frontiers in Plant Science, 2022):</strong> Nghiên cứu ghi nhận chế phẩm gốc potassium phosphite phun qua lá cải thiện một số đặc điểm rễ, sinh khối rễ, hoạt động enzyme nitrate reductase và quang hợp trong điều kiện thí nghiệm. Một số phản ứng thể hiện rõ nét hơn khi cây chịu thiếu dinh dưỡng, nóng hoặc hạn. [4]
+                </div>
+                <div class="research-item">
+                  <strong>Nghiên cứu trên cây lúa (Plants, 2020):</strong> Nghiên cứu với giống lúa Nipponbare ghi nhận phosphite làm thay đổi biểu hiện của nhiều nhóm gene liên quan đến phản ứng tự vệ của cây; mô lá cây con trong thí nghiệm dày hơn đối chứng. [5]
+                </div>
+                <div class="research-item">
+                  <strong>Đánh giá thực địa ruộng lúa (Crop Protection / FAO AGRIS, 2016):</strong> Một thử nghiệm đồng ruộng tại Uruguay đánh giá potassium phosphite trên lúa ở giai đoạn cuối làm đòng đến đầu trổ trong bối cảnh bệnh thân và bẹ lúa. [6]
+                </div>
+              </div>
+
+              <div class="reference-links">
+                <h3 class="reference-title">Tài liệu khoa học tham khảo</h3>
+                <ol>
+                  <li>
+                    <a href="https://webapps.irri.org/in/od/rcm/questionnaires/BlankRecommendationPage.pdf" target="_blank" rel="noopener noreferrer">IRRI – Critical growth stages of rice</a>: Phân biệt ngày sau sạ với các mốc đẻ nhánh, làm đòng, trổ theo từng giống.
+                  </li>
+                  <li>
+                    <a href="https://www.vaniperen.com/wp-content/uploads/dlm_uploads/2017/12/VII-TDS-EN-EL-Potassium-Phosphite-50-Liquid-27-11-2017-681-1.pdf" target="_blank" rel="noopener noreferrer">Van Iperen – Potassium Phosphite 50% Liquid, Product Datasheet</a>: Xuất xứ Hà Lan và chỉ tiêu 30% P₂O₅, 20% K₂O theo w/w của nguyên liệu.
+                  </li>
+                  <li>
+                    <a href="https://ask.ifas.ufl.edu/publication/HS254" target="_blank" rel="noopener noreferrer">University of Florida IFAS – Phosphite và phosphate trong dinh dưỡng cây</a>: Giải thích vai trò sinh học khác nhau giữa phosphite và phosphate.
+                  </li>
+                  <li>
+                    <a href="https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2022.1017048/full" target="_blank" rel="noopener noreferrer">Mohammed và cộng sự, Frontiers in Plant Science (2022)</a>: Nghiên cứu phosphite trên lúa mì, khảo sát rễ, quang hợp và đáp ứng stress.
+                  </li>
+                  <li>
+                    <a href="https://www.mdpi.com/2223-7747/9/10/1334" target="_blank" rel="noopener noreferrer">Huang và cộng sự, Plants (2020)</a>: Nghiên cứu phosphite trên cây lúa con Nipponbare, khảo sát đặc điểm mô lá và biểu hiện gene.
+                  </li>
+                  <li>
+                    <a href="https://agris.fao.org/search/en/providers/122535/records/65e00c6f63b8185d9cb0ea2b" target="_blank" rel="noopener noreferrer">Martínez và cộng sự, Crop Protection (2016), hồ sơ FAO AGRIS</a>: Thử nghiệm potassium phosphite trên ruộng lúa Uruguay ở cuối làm đòng đến đầu trổ.
+                  </li>
+                </ol>
+                <p class="research-disclaimer">
+                  <em>* Lưu ý: Các tài liệu khoa học trên giải thích cơ chế và tiềm năng của hoạt chất potassium phosphite; không chứng minh hay bảo đảm hiệu quả độc quyền của sản phẩm MINORI Ultra Grow trên mọi điều kiện ruộng lúa thương mại.</em>
+                </p>
+              </div>
+            </div>
+          </details>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. EFFECT / VAI TRÒ SẢN PHẨM -->
+    <section class="effect-section">
+      <div class="wrap effect-card glass-dark reveal">
+        <div class="eyebrow light" style="justify-content:center">Vai trò của Ultra Grow</div>
+        <h2>Chăm cây chuyên sâu – Nuôi dưỡng sức bền</h2>
+        <div class="flow">
+          <div class="flow-step">Khỏe rễ &amp; thân</div>
+          <div class="flow-step">Lá xanh dày</div>
+          <div class="flow-step">Hỗ trợ đề kháng</div>
+          <div class="flow-step">Chuẩn bị làm đòng</div>
+        </div>
+        <blockquote>“Bộ rễ tốt chưa đủ, cây phải đủ sức đi đường dài để nuôi đòng và chắc hạt.”</blockquote>
+      </div>
+    </section>
+
+    <!-- 6. HƯỚNG DẪN THỰC ĐỊA / HƯỚNG DẪN SỬ DỤNG GHI TRÊN NHÃN -->
+    <section class="field-guide-section" id="huong-dan-su-dung">
+      <div class="wrap">
+        <div class="field-guide-card glass reveal">
+          <div class="field-guide-header">
+            <div class="eyebrow section-label">Quy trình khuyến cáo trên nhãn</div>
+            <h2>Hướng dẫn sử dụng MINORI Ultra Grow</h2>
+            <p class="lead">Trích xuất chính xác hướng dẫn sử dụng từ nhãn sản phẩm MINORI Ultra Grow:</p>
+          </div>
+
+          <div class="field-guide-grid">
+            <div class="guide-step">
+              <div class="step-num">01</div>
+              <div class="step-body">
+                <h3>Tỷ lệ pha nước</h3>
+                <p>Pha 1 lít sản phẩm với 400–800 lít nước. Khuấy tan đều trước khi đưa vào bình phun hoặc hệ thống tưới.</p>
+              </div>
+            </div>
+
+            <div class="guide-step">
+              <div class="step-num">02</div>
+              <div class="step-body">
+                <h3>Liều lượng cây lương thực</h3>
+                <p>Sử dụng 1,5–2 lít/ha/vụ (đây là tổng lượng khuyến cáo cho cả vụ). Chia đều phun 2–3 lần/ha/vụ vào các giai đoạn bón lót, bón thúc.</p>
+              </div>
+            </div>
+
+            <div class="guide-step">
+              <div class="step-num">03</div>
+              <div class="step-body">
+                <h3>Thời điểm phun</h3>
+                <p>Phun vào lúc sáng sớm hoặc chiều mát khi khí khổng lá mở tối ưu, tránh ánh nắng gay gắt để dưỡng chất thẩm thấu trọn vẹn.</p>
+              </div>
+            </div>
+
+            <div class="guide-step">
+              <div class="step-num">04</div>
+              <div class="step-body">
+                <h3>Quản lý dinh dưỡng tổng thể</h3>
+                <p>Sản phẩm bón lá hỗ trợ hấp thu nhanh và kích hoạt sức đề kháng; cần kết hợp chặt chẽ với quản lý nước và bón phân gốc cân đối theo nhu cầu thực tế của ruộng.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. FAQ / CÂU HỎI THƯỜNG GẶP -->
+    <section class="faq-section" id="faq">
+      <div class="wrap">
+        <div class="faq-card glass reveal">
+          <div class="faq-header">
+            <div class="eyebrow section-label" style="justify-content:center">Hỏi đáp kỹ thuật</div>
+            <h2>Câu hỏi thường gặp về MINORI Ultra Grow</h2>
+            <p class="lead">Những thắc mắc phổ biến của bà con nông dân về dòng chăm cây chuyên sâu giữa vụ.</p>
+          </div>
+
+          <div class="faq-list">
+{ug_faq_html}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. NEXT STAGE -->
+    <section class="next">
+      <div class="wrap next-card glass reveal">
+        <div>
+          <div class="eyebrow">Tiếp nối mùa vụ</div>
+          <h2>Khi cây đã lớn khỏe, hành trình chuyển sang nuôi bông và hạt.</h2>
+          <p>Khám phá giai đoạn nuôi bông, vô gạo với MINORI Vô Gạo Pro Max.</p>
+          <p class="next-sibling">Cùng giai đoạn giữa vụ: <a href="../duong-cay-khoe-la/">MINORI Dưỡng Cây Khỏe Lá</a> – bổ sung lân kali, dưỡng lá khỏe, cây vững giữa vụ.</p>
+        </div>
+        <a class="btn" href="../vo-gao-promax/">Xem Vô Gạo Pro Max</a>
+      </div>
+    </section>
+'''
+
+(root / ug_slug).mkdir(exist_ok=True)
+(root / ug_slug / 'index.html').write_text(
+    doc(ug_title, ug_desc, ug_slug, ug_body, base='../', path=f"{ug_slug}/", head_extra=ug_head),
     encoding='utf-8')
 
 # ================================================================

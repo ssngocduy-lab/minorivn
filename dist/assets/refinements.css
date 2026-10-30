@@ -425,10 +425,10 @@ em { font-style: normal; }
 .product-hero-copy h1 em { color: #79480a; }
 
 @media (max-width: 1250px) {
-  .site-header .wrap.header-layout { padding: 0 !important; gap: 26px; }
-  .brand img { width: 245px; }
-  .brand b { font-size: 2.45rem; }
-  .brand small { font-size: 1.08rem; }
+  .site-header .wrap.header-layout { padding: 0 !important; gap: 14px; }
+  .brand img { width: 140px; }
+  .brand b { font-size: 1.55rem; }
+  .brand small { font-size: .7rem; }
 }
 @media (max-width: 980px) {
   .site-header .wrap.header-layout { padding: 0 !important; gap: 18px; border-radius: 0 !important; }
@@ -1391,8 +1391,73 @@ html.mobile-os .choice-cta-arrow { display: none; }
   text-underline-offset: 3px;
 }
 
-/* Menu desktop có thêm một mục: thu gọn khoảng cách để không tràn ngang */
-@media (min-width: 1181px) and (max-width: 1440px) {
-  .main-nav { gap: 16px; }
-  .main-nav a, .main-nav .nav-contact { font-size: .76rem; }
+/* ============================================================
+   Header & Nav Responsive: Khắc phục triệt để tràn ngang ở 1280px và các breakpoint lân cận
+   ============================================================ */
+@media (max-width: 1440px) {
+  .site-header .wrap.header-layout {
+    gap: 20px;
+    justify-content: space-between;
+  }
+  .brand {
+    gap: 16px;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+  .brand img {
+    width: clamp(160px, 15vw, 220px);
+    max-height: 140px;
+  }
+  .brand b {
+    font-size: clamp(1.6rem, 1.8vw, 2.3rem);
+    letter-spacing: .08em;
+  }
+  .brand small {
+    font-size: clamp(.72rem, .85vw, 1rem);
+    letter-spacing: .05em;
+  }
+  .nav-shell {
+    padding: 6px 12px 6px 16px;
+    flex-shrink: 0;
+  }
+  .main-nav {
+    gap: 12px;
+  }
+  .main-nav a,
+  .main-nav .nav-contact {
+    font-size: .74rem;
+    padding: 6px 8px;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 1280px) {
+  .site-header .wrap.header-layout {
+    gap: 14px;
+  }
+  .brand {
+    gap: 12px;
+  }
+  .brand img {
+    width: 140px;
+  }
+  .brand b {
+    font-size: 1.55rem;
+    letter-spacing: .06em;
+  }
+  .brand small {
+    font-size: .7rem;
+    letter-spacing: .04em;
+  }
+  .nav-shell {
+    padding: 6px 10px 6px 14px;
+  }
+  .main-nav {
+    gap: 8px;
+  }
+  .main-nav a,
+  .main-nav .nav-contact {
+    font-size: .72rem;
+    padding: 6px 6px;
+  }
 }
