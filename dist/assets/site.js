@@ -17,7 +17,7 @@ const form=document.querySelector('#contact-form');if(form){form.addEventListene
 // Image Modal Popup: Scale to fit user screen on click
 (function setupImageModal() {
   function init() {
-    const triggers = document.querySelectorAll('.bottle-window[data-full-img]');
+    const triggers = document.querySelectorAll('[data-full-img]');
     if (!triggers.length) return;
     
     let modal = document.querySelector('#image-modal');
@@ -33,16 +33,33 @@ const form=document.querySelector('#contact-form');if(form){form.addEventListene
         <div class="modal-content">
           <button class="modal-close" type="button" aria-label="Đóng phóng to">✕</button>
           <img id="modal-img" src="" alt="Hình ảnh sản phẩm chi tiết">
+          <div class="modal-zoom-hint">🔍 Nhấn vào ảnh để phóng to chi tiết / Thu nhỏ</div>
         </div>
       `;
       document.body.appendChild(modal);
 
       const closeModal = () => {
         modal.classList.remove('open');
+        modal.classList.remove('is-zoomed');
       };
 
       modal.querySelector('.modal-close').addEventListener('click', closeModal);
       modal.querySelector('.modal-backdrop').addEventListener('click', closeModal);
+
+      const modalImg = modal.querySelector('#modal-img');
+      if (modalImg) {
+        modalImg.addEventListener('click', (e) => {
+          e.stopPropagation();
+          modal.classList.toggle('is-zoomed');
+          const hint = modal.querySelector('.modal-zoom-hint');
+          if (hint) {
+            hint.textContent = modal.classList.contains('is-zoomed')
+              ? '🔍 Nhấn vào ảnh để thu nhỏ'
+              : '🔍 Nhấn vào ảnh để phóng to chi tiết / Thu nhỏ';
+          }
+        });
+      }
+
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && modal.classList.contains('open')) {
           closeModal();
@@ -52,14 +69,27 @@ const form=document.querySelector('#contact-form');if(form){form.addEventListene
 
     triggers.forEach(trig => {
       trig.style.cursor = 'pointer';
-      trig.setAttribute('title', 'Nhấn để phóng to hình ảnh');
+      if (!trig.getAttribute('title')) {
+        trig.setAttribute('title', 'Nhấn để phóng to hình ảnh');
+      }
       trig.addEventListener('click', (e) => {
         e.preventDefault();
         const fullImg = trig.getAttribute('data-full-img');
         const modalImg = modal.querySelector('#modal-img');
         if (fullImg && modalImg) {
+          modal.classList.remove('is-zoomed');
           modalImg.src = fullImg;
           modal.classList.add('open');
+          const hint = modal.querySelector('.modal-zoom-hint');
+          if (hint) {
+            hint.textContent = '🔍 Nhấn vào ảnh để phóng to chi tiết / Thu nhỏ';
+          }
+        }
+      });
+      trig.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          trig.click();
         }
       });
     });

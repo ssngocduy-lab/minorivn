@@ -336,8 +336,9 @@ for p in products:
             <h2>Hình ảnh đầy đủ {escape(p['title'])}</h2>
             <p class="lead">Bao bì chuẩn nhận diện và thông số nhãn của {escape(p['short'])}.</p>
           </div>
-          <div class="full-view-artwork">
+          <div class="full-view-artwork" data-full-img="../assets/{p['bottle']}" role="button" tabindex="0" title="Nhấn để phóng to hình ảnh">
             <img src="../assets/{p['bottle']}" alt="Hình ảnh đầy đủ {escape(p['title'])}" loading="lazy">
+            <span class="zoom-badge zoom-badge--full">🔍 Nhấn để phóng to</span>
           </div>
         </div>
       </div>

@@ -638,21 +638,56 @@ html.os-android .arrow-link {
 .modal-content {
   position: relative;
   z-index: 2;
-  max-width: 92vw;
+  max-width: 94vw;
   max-height: 90vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  transition: max-width .2s, max-height .2s;
 }
 .modal-content img {
   max-width: 90vw;
-  max-height: 84vh;
+  max-height: 80vh;
   width: auto;
   height: auto;
   object-fit: contain;
   border-radius: 12px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
   animation: modal-pop .25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: zoom-in;
+  transition: transform .2s ease;
+}
+.modal-zoom-hint {
+  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  padding: 4px 14px;
+  border-radius: 14px;
+  pointer-events: none;
+  user-select: none;
+}
+.image-modal.is-zoomed .modal-content {
+  overflow: auto;
+  max-width: 98vw;
+  max-height: 92vh;
+  padding: 12px;
+  display: block;
+  text-align: center;
+  -webkit-overflow-scrolling: touch;
+}
+.image-modal.is-zoomed #modal-img {
+  max-width: none;
+  max-height: none;
+  width: min(1300px, 240vw);
+  height: auto;
+  cursor: zoom-out;
+  margin: 0 auto;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.75);
 }
 @keyframes modal-pop {
   from { transform: scale(0.9); opacity: 0; }
@@ -704,6 +739,7 @@ html.os-android .arrow-link {
   justify-content: center;
 }
 .full-view-artwork {
+  position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -713,6 +749,34 @@ html.os-android .arrow-link {
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow: 0 12px 35px rgba(25, 45, 20, 0.08);
+  cursor: pointer;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.full-view-artwork:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(25, 45, 20, 0.15);
+}
+.full-view-artwork:focus-visible {
+  outline: 3px solid #1a3c28;
+  outline-offset: 3px;
+}
+.full-view-artwork .zoom-badge--full {
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  padding: 6px 16px;
+  border-radius: 20px;
+  background: rgba(20, 52, 34, 0.9);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  opacity: 0.9;
+  transition: all .2s ease;
+}
+.full-view-artwork:hover .zoom-badge--full {
+  opacity: 1;
+  background: #173f2c;
+  transform: translateX(-50%) scale(1.04);
 }
 .full-view-artwork img {
   width: 100%;
